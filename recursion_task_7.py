@@ -1,4 +1,4 @@
-def get_second_max_number(array: list):
+def main(array: list):
     def find_second_max_number(max_number: int, second_max_number: int, index: int):
         if index >= len(array):
             return second_max_number
