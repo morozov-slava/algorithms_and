@@ -7,3 +7,5 @@ def main(array: list):
             print(array[index])
         print_even_indices_elements(array, index+2)
     return print_even_indices_elements(array, 0)
+
+
