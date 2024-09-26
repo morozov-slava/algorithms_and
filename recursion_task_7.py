@@ -12,3 +12,5 @@ def find_second_max_number(max_number: int, second_max_number: int, index: int):
 
 def main(array: list):
     return find_second_max_number(array[0], array[0], 0)
+
+
