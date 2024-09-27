@@ -4,7 +4,7 @@ def print_even_indices_elements(array: list, index: int):
         return None
     if index % 2 == 0:
         print(array[index])
-    print_even_indices_elements(array, index+2)
+    print_even_indices_elements(array, index+1)
 
 def main(array: list):
     return print_even_indices_elements(array, 0)
