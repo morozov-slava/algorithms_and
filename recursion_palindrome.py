@@ -1,9 +1,10 @@
 # Реализуйте функцию, проверяющую, является ли строка палиндромом, с использованием рекурсии
-def is_palindrome_string(string: str):
-    if len(string) <= 1:
+def is_palindrome_string(string: str, index: int):
+    if index >= len(string) // 2:
         return True
-    if not string[0] == string[-1]:
+    print(f"{string[index]} --- {string[-1*index-1]}") 
+    if not string[index] == string[-1*index-1]:
         return False
-    return is_palindrome_string(string[1:-1])
+    return is_palindrome_string(string, index+1)
 
 
