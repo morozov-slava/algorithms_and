@@ -75,3 +75,5 @@ def add_node_level(Node: SimpleTreeNode, current_level: int) -> None:
 
 def set_tree_node_levels(Tree: SimpleTree) -> None:
     add_node_level(Tree.Root, 0)
+
+
