@@ -82,3 +82,5 @@ def is_symmetric_level(one_level_nodes: list):
 
 def is_symmetric_tree(Tree: SimpleTree):
     return is_symmetric_level(Tree.Root.Children)
+
+
