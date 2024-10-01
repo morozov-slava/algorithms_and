@@ -33,11 +33,11 @@ class SimpleTree:
 
     def _get_number_of_leaves(self, StartNode):
         n_leaves = 0
+        if len(StartNode.Children) == 0:
+            n_leaves += 1
+            return n_leaves
         for N in StartNode.Children:
-            if len(N.Children):
-                n_leaves += self._get_number_of_leaves(N)
-            else:
-                n_leaves += 1
+            n_leaves += self._get_number_of_leaves(N)
         return n_leaves
 	
     def AddChild(self, ParentNode, NewChild):
