@@ -1,6 +1,6 @@
 class BSTNode:
     def __init__(self, key, val, parent):
-        self.NodeKey = key 
+        self.NodeKey = key
         self.NodeValue = val
         self.Parent = parent
         self.LeftChild = None
@@ -73,6 +73,17 @@ class BST:
         if NodeToReplace.RightChild is not None:
             ReplacingNode.RightChild = NodeToReplace.RightChild
             NodeToReplace.RightChild = None   
+
+    def _replace_root_node(self, ReplacingNode):
+        if self.Root.LeftChild is not None:
+            ReplacingNode.LeftChild = self.Root.LeftChild
+            ReplacingNode.LeftChild.Parent = ReplacingNode
+            self.Root.LeftChild = None
+        if self.Root.RightChild is not None:
+            ReplacingNode.RightChild = self.Root.RightChild
+            ReplacingNode.RightChild.Parent = ReplacingNode
+            self.Root.RightChild = None
+        self.Root = ReplacingNode
         
     def FindNodeByKey(self, key):
         Node, NodeHasKey, ToLeft = self._find_node_by_key(self.Root, key)
@@ -94,6 +105,19 @@ class BST:
         bst_find = self.FindNodeByKey(key)
         if not bst_find.NodeHasKey:
             return bst_find.NodeHasKey 
+        # root node delete
+        if bst_find.Node == self.Root:
+            if (bst_find.Node.RightChild is None) and (bst_find.Node.LeftChild is None):
+                self.Root = None
+                return bst_find.NodeHasKey 
+            elif (bst_find.Node.RightChild is not None):
+                ReplacingNode = self.FinMinMax(bst_find.Node.RightChild, FindMax=False)
+            else:
+                ReplacingNode = self.FinMinMax(bst_find.Node.LeftChild, FindMax=False)
+            self.DeleteNodeByKey(ReplacingNode.NodeKey)
+            self._replace_root_node(ReplacingNode)
+            return bst_find.NodeHasKey
+        # no children
         if (bst_find.Node.LeftChild is None) and (bst_find.Node.RightChild is None):
             parent_node = bst_find.Node.Parent
             if parent_node.NodeKey > key:
@@ -102,6 +126,7 @@ class BST:
                 parent_node.RightChild = None
             bst_find.Node.Parent = None
             return bst_find.NodeHasKey
+        # right child exist
         if bst_find.Node.RightChild is not None:
             ReplacingNode = self.FinMinMax(bst_find.Node.RightChild, FindMax=False)
         else:
