@@ -94,6 +94,9 @@ class BST:
         return bst_find
 
     def AddKeyValue(self, key, val):
+        if self.Root is None:
+            self.Root = BSTNode(key, val, parent=None)
+            return True
         return self._add_key_value(self.Root, key, val)
   
     def FinMinMax(self, FromNode, FindMax: bool):
@@ -105,7 +108,6 @@ class BST:
         bst_find = self.FindNodeByKey(key)
         if not bst_find.NodeHasKey:
             return bst_find.NodeHasKey 
-        # root node delete
         if bst_find.Node == self.Root:
             if (bst_find.Node.RightChild is None) and (bst_find.Node.LeftChild is None):
                 self.Root = None
@@ -117,7 +119,6 @@ class BST:
             self.DeleteNodeByKey(ReplacingNode.NodeKey)
             self._replace_root_node(ReplacingNode)
             return bst_find.NodeHasKey
-        # no children
         if (bst_find.Node.LeftChild is None) and (bst_find.Node.RightChild is None):
             parent_node = bst_find.Node.Parent
             if parent_node.NodeKey > key:
@@ -126,7 +127,6 @@ class BST:
                 parent_node.RightChild = None
             bst_find.Node.Parent = None
             return bst_find.NodeHasKey
-        # right child exist
         if bst_find.Node.RightChild is not None:
             ReplacingNode = self.FinMinMax(bst_find.Node.RightChild, FindMax=False)
         else:
@@ -136,6 +136,8 @@ class BST:
         return bst_find.NodeHasKey 
 
     def Count(self):
+        if self.Root is None:
+            return 0
         return self._number_nodes_in_tree(self.Root)
 
 
