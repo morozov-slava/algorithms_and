@@ -140,24 +140,26 @@ class BST:
             return 0
         return self._number_nodes_in_tree(self.Root)
 
-
-
-# 2.* (бонус +500) Добавьте метод, который находит все пути от корня к листьям, длина которых равна заданной величине.
-def find_ways(Node: BSTNode, current_level: int, n: int, path: list):
-    result = []
-    # Если узел является листом
-    if (Node.LeftChild is None) and (Node.RightChild is None) and (current_level == n):
-        result.append(path + [Node])
+    # 2.* (бонус +500) Добавьте метод, который находит все пути от корня к листьям, длина которых равна заданной величине.
+    def _find_ways(self, Node: BSTNode, current_level: int, n: int, path: list):
+        result = []
+        # Если узел является листом
+        if (Node.LeftChild is None) and (Node.RightChild is None) and (current_level == n):
+            result.append(path + [Node])
+            return result
+        if (Node.LeftChild is not None) and (current_level < n):
+            result.extend(
+                self._find_ways(Node.LeftChild, current_level+1, n, path + [Node])
+            )
+        if (Node.RightChild is not None) and (current_level < n):
+            result.extend(
+                self._find_ways(Node.RightChild, current_level+1, n, path + [Node])
+            )
         return result
-    if (Node.LeftChild is not None) and (current_level < n):
-        result.extend(find_ways(Node.LeftChild, current_level+1, n, path + [Node]))
-    if (Node.RightChild is not None) and (current_level < n):
-        result.extend(find_ways(Node.RightChild, current_level+1, n, path + [Node]))
-    return result
-
-def find_all_root_to_leaf_ways(tree: BST, n: int):
-    if tree.Root is None:
-        return []
-    return find_ways(tree.Root, 0, n, [])
+    
+    def find_all_root_to_leaf_ways(self, n: int):
+        if self.Root is None:
+            return []
+        return self._find_ways(self.Root, 0, n, [])
 
 
