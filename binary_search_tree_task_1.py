@@ -140,22 +140,20 @@ class BST:
             return 0
         return self._number_nodes_in_tree(self.Root)
 
-
-# 1.* Добавьте метод, проверяющий, идентично ли текущее дерево дереву-параметру.
-def are_identic_nodes(Node1: BSTNode, Node2: BSTNode):
-    if (Node1 is not None) and (Node2 is not None):
-        if Node1.NodeKey != Node2.NodeKey:
+    # 1.* Добавьте метод, проверяющий, идентично ли текущее дерево дереву-параметру.
+    def _are_identic_nodes(self, Node1: BSTNode, Node2: BSTNode):
+        if (Node1 is not None) and (Node2 is not None):
+            if Node1.NodeKey != Node2.NodeKey:
+                return False
+            are_left_identic = self._are_identic_nodes(Node1.LeftChild, Node2.LeftChild)
+            are_right_identic = self._are_identic_nodes(Node1.RightChild, Node2.RightChild)
+            return all([are_left_identic, are_right_identic])
+        elif (Node1 is None) and (Node2 is None):
+            return True
+        else:
             return False
-        are_left_identic = are_identic_nodes(Node1.LeftChild, Node2.LeftChild)
-        are_right_identic = are_identic_nodes(Node1.RightChild, Node2.RightChild)
-        return all([are_left_identic, are_right_identic])
-    elif (Node1 is None) and (Node2 is None):
-        return True
-    else:
-        return False
-
-def are_identic_trees(tree1: BST, tree2: BST):
-    return are_identic_nodes(tree1.Root, tree2.Root)
-
+    
+    def are_identic_trees(self, param_tree: BST):
+        return self._are_identic_nodes(self.Root, param_tree.Root)
 
 
