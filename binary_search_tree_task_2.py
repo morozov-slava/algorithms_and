@@ -141,6 +141,11 @@ class BST:
         return self._number_nodes_in_tree(self.Root)
 
     # 2.* (бонус +500) Добавьте метод, который находит все пути от корня к листьям, длина которых равна заданной величине.
+    def find_all_root_to_leaf_ways(self, n: int):
+        if self.Root is None:
+            return []
+        return self._find_ways(self.Root, 0, n, [])
+
     def _find_ways(self, Node: BSTNode, current_level: int, n: int, path: list):
         result = []
         # Если узел является листом
@@ -157,9 +162,4 @@ class BST:
             )
         return result
     
-    def find_all_root_to_leaf_ways(self, n: int):
-        if self.Root is None:
-            return []
-        return self._find_ways(self.Root, 0, n, [])
-
 
