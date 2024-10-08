@@ -141,7 +141,7 @@ class BST:
         return self._number_nodes_in_tree(self.Root)
 
     # 3.* (бонус +500) Добавьте метод, который находит все пути от корня к листьям, чтобы сумма значений узлов на этом пути была максимальной.
-    def _find_way_with_max_value(self):
+    def find_way_with_max_value(self):
         if self.Root is None:
             return []
         all_paths = self._find_max_value_way(self.Root, [], 0)
