@@ -141,6 +141,9 @@ class BST:
         return self._number_nodes_in_tree(self.Root)
 
     # 1.* Добавьте метод, проверяющий, идентично ли текущее дерево дереву-параметру.
+    def are_identic_trees(self, param_tree: BST):
+        return self._are_identic_nodes(self.Root, param_tree.Root)
+	
     def _are_identic_nodes(self, Node1: BSTNode, Node2: BSTNode):
         if (Node1 is not None) and (Node2 is not None):
             if Node1.NodeKey != Node2.NodeKey:
@@ -152,8 +155,5 @@ class BST:
             return True
         else:
             return False
-    
-    def are_identic_trees(self, param_tree: BST):
-        return self._are_identic_nodes(self.Root, param_tree.Root)
 
 
