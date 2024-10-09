@@ -148,7 +148,6 @@ class BST:
 
     def _find_ways(self, Node: BSTNode, current_level: int, n: int, path: list):
         result = []
-        # Если узел является листом
         if (Node.LeftChild is None) and (Node.RightChild is None) and (current_level == n):
             result.append(path + [Node])
             return result
