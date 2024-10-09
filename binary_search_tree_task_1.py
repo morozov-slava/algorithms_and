@@ -153,7 +153,6 @@ class BST:
             return all([are_left_identic, are_right_identic])
         elif (Node1 is None) and (Node2 is None):
             return True
-        else:
-            return False
+        return False
 
 
