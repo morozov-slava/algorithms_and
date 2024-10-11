@@ -1,6 +1,6 @@
 class aBST:
     def __init__(self, depth: int):
-        self.tree_size = 2**(depth-1)
+        self.tree_size = sum([2**(i) for i in range(depth+1)])
         self.Tree = [None] * self.tree_size
 
     def _find_key(self, i: int, key: int):
