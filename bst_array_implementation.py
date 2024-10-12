@@ -17,7 +17,7 @@ class aBST:
 
     def _add_key(self, i: int, key: int):
         if i > self.tree_size-1:
-            return None
+            return -1
         if self.Tree[i] is None:
             self.Tree[i] = key
             return i
@@ -26,7 +26,7 @@ class aBST:
         elif self.Tree[i] < key:
             return self._add_key(2*i + 2, key)
         elif self.Tree[i] == key:
-            return -1
+            return i
 	
     def FindKeyIndex(self, key: int):
         if self.Tree[0] is None:
