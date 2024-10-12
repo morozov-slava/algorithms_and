@@ -9,9 +9,9 @@ class aBST:
         if self.Tree[i] is None:
             return -i
         elif self.Tree[i] > key:
-            return self._find_key(2*i + 2, key)
-        elif self.Tree[i] < key:
             return self._find_key(2*i + 1, key)
+        elif self.Tree[i] < key:
+            return self._find_key(2*i + 2, key)
         elif self.Tree[i] == key:
             return i
 
@@ -22,9 +22,9 @@ class aBST:
             self.Tree[i] = key
             return i
         elif self.Tree[i] > key:
-            return self._add_key(2*i + 2, key)
-        elif self.Tree[i] < key:
             return self._add_key(2*i + 1, key)
+        elif self.Tree[i] < key:
+            return self._add_key(2*i + 2, key)
         elif self.Tree[i] == key:
             return -1
 	
