@@ -225,6 +225,12 @@ class BST:
 
 # 5.* (бонус +500) Учитывая результаты обхода дерева в префиксном и инфиксном порядке, разработайте функцию для восстановления оригинального дерева. 
 # Например, префиксный массив: [1,2,4,5,3,6,7] инфиксный массив: [4,2,5,1,6,3,7]
+def restorate_tree(pre_order_keys: list, in_order_keys: list):
+    tree = BST(node=None)
+    restorate_keys(tree, pre_order_keys, in_order_keys)
+    return tree
+	
+
 def restorate_keys(tree: BST, pre_order_keys: list, in_order_keys: list):
     if len(pre_order_keys) == 0 or len(in_order_keys) == 0:
         return None
@@ -237,11 +243,5 @@ def restorate_keys(tree: BST, pre_order_keys: list, in_order_keys: list):
     restorate_keys(tree, left_pre_order, left_in_order)
     restorate_keys(tree, right_pre_order, right_in_order)
     return None
-
-
-def restorate_tree(pre_order_keys: list, in_order_keys: list):
-    tree = BST(node=None)
-    restorate_keys(tree, pre_order_keys, in_order_keys)
-    return tree
 
 
