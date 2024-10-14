@@ -144,20 +144,17 @@ class BST:
     def find_way_with_max_value(self):
         if self.Root is None:
             return []
-        all_paths = self._find_max_value_way(self.Root, [], 0)
-        return sorted(all_paths, key=lambda x: x[1], reverse=True)[0][0]
+        return self._find_max_value_way(self.Root, [], 0)[0]
 
     def _find_max_value_way(self, Node: BSTNode, current_path: list, current_sum_values: int):
-        result = []
         if Node is None:
-            result.append((current_path, current_sum_values))
-        else:
-            result.extend(
-                self._find_max_value_way(Node.LeftChild, current_path+[Node], current_sum_values+Node.NodeKey)
-            )
-            result.extend(
-                self._find_max_value_way(Node.RightChild, current_path+[Node], current_sum_values+Node.NodeKey)
-            )
-        return result
+            return current_path, current_sum_values
+        left_path, left_sum = self._find_max_value_way(Node.LeftChild, current_path+[Node], current_sum_values+Node.NodeKey)
+        right_path, right_sum = self._find_max_value_way(Node.RightChild, current_path+[Node], current_sum_values+Node.NodeKey)
+        if (left_sum == right_sum) and (left_path != right_path):
+            return [left_path, right_path], left_sum 
+        elif left_sum > right_sum:
+            return left_path, left_sum
+        return right_path, right_sum
 
 
