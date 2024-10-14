@@ -198,3 +198,28 @@ class BST:
             return self._pre_order_deep_search(self.Root)
         else:
             raise KeyError(f"Unknown approach '{approach}'")
+
+    # 4.* (бонус +500) Добавьте метод, который находит уровень в текущем дереве, сумма значений узлов на котором максимальна.
+    # Подумайте, как оптимизировать решение, чтобы производительность была достаточной даже для больших деревьев.
+    def find_max_sum_values_tree_level(self):
+        if self.Root is None:
+            return None
+        return self._find_level_with_max_sum_values([self.Root], 0, 0, 0)
+    
+    def _find_level_with_max_sum_values(self, one_level_nodes: list, current_level: int, max_level: int, max_sum: int):
+        if len(one_level_nodes) == 0:
+            return max_level
+        next_level_nodes = []
+        current_sum = 0
+        for Node in one_level_nodes:
+            if Node.LeftChild is not None:
+                next_level_nodes.append(Node.LeftChild)
+            if Node.RightChild is not None:
+                next_level_nodes.append(Node.RightChild)
+            current_sum += Node.NodeKey
+        if current_sum > max_sum:
+            max_sum = current_sum
+            max_level = current_level
+        return self._find_level_with_max_sum_values(next_level_nodes, current_level+1, max_level, max_sum)
+
+
