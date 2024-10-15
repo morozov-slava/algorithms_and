@@ -201,25 +201,23 @@ class BST:
 
 
 # 3.* Реализуйте алгоритм инвертирования дерева: надо сделать так, чтобы слева от главного узла были значения больше него, а справа — меньше. 
-def invert_tree(tree):
+def invert_tree(tree: BST):
     if tree.Root is None:
         return True
-    invert_tree_nodes([tree.Root])
+    invert_tree_nodes(tree.Root)
 
 
-def invert_tree_nodes(one_level_nodes: list):
-    if len(one_level_nodes) == 0:
+def invert_tree_nodes(Node: BSTNode):
+    if (Node.LeftChild is None) and (Node.RightChild is None):
         return True
-    next_level_nodes = []
-    for Node in one_level_nodes:
-        left_child = Node.LeftChild
-        right_child = Node.RightChild
-        Node.LeftChild = Node.RightChild
-        Node.RightChild = left_child
-        if left_child is not None:
-            next_level_nodes.append(left_child)
-        if right_child is not None:
-            next_level_nodes.append(right_child)
-    return invert_tree_nodes(next_level_nodes)
+    left_child = Node.LeftChild
+    right_child = Node.RightChild
+    Node.LeftChild = Node.RightChild
+    Node.RightChild = left_child
+    if Node.LeftChild is not None:
+        invert_tree_nodes(Node.LeftChild)
+    if Node.RightChild is not None:
+        invert_tree_nodes(Node.RightChild)
+    return True
 
 
