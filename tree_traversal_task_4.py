@@ -201,7 +201,7 @@ class BST:
 
     # 4.* (бонус +500) Добавьте метод, который находит уровень в текущем дереве, сумма значений узлов на котором максимальна.
     # Подумайте, как оптимизировать решение, чтобы производительность была достаточной даже для больших деревьев.
-    def find_max_sum_keys_tree_level(self):
+    def find_level_with_max_sum_keys(self):
         if self.Root is None:
             return None
         return self._find_max_sum_keys_level([self.Root], 0, 0, 0)
@@ -220,6 +220,6 @@ class BST:
         if current_sum > max_sum:
             max_sum = current_sum
             max_level = current_level
-        return self._find_level_with_max_sum_values(next_level_nodes, current_level+1, max_level, max_sum)
+        return self._find_max_sum_keys_level(next_level_nodes, current_level+1, max_level, max_sum)
 
 
