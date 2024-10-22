@@ -39,6 +39,17 @@ class aBST:
     # 2.* (бонус +500) Поиск наименьшего общего предка (LCA). 
     # Напишите метод, который находит наименьшего общего предка двух узлов в текущем дереве, представленном в виде массива. 
     # Объясните, как индексы в массиве могут быть использованы для упрощения поиска, по сравнению с классической рекурсивной реализацией.
+    def find_least_common_ancestor(self, key1: int, key2: int):
+        k1_path = self._get_key_path(key1)
+        k2_path = self._get_key_path(key2)
+        lca = None
+        for a, b in zip(k1_path, k2_path):
+            if a == b:
+                lca = a
+            else:
+                break
+        return lca
+	
     def _get_key_path(self, key: int):
         path = []
         i = 0
@@ -52,15 +63,4 @@ class aBST:
                 i = 2*i + 2
         return path
     
-    def find_least_common_ancestor(self, key1: int, key2: int):
-        k1_path = self._get_key_path(key1)
-        k2_path = self._get_key_path(key2)
-        lca = None
-        for a, b in zip(k1_path, k2_path):
-            if a == b:
-                lca = a
-            else:
-                break
-        return lca
-
 
