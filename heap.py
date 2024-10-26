@@ -1,6 +1,7 @@
 class Heap:
     def __init__(self):
         self.HeapArray = []
+        self.HeapSize = 0
 
     def _clean_heap(self):
         if len(self.HeapArray):
@@ -11,9 +12,9 @@ class Heap:
             return True
         parent_index = (start_index - 1) // 2
         parent_key = self.HeapArray[parent_index]
-        child_key = self.HeapArray[start_index]
-        if parent_key < child_key:
-            self.HeapArray[parent_index] = child_key
+        current_key = self.HeapArray[start_index]
+        if parent_key < current_key:
+            self.HeapArray[parent_index] = current_key
             self.HeapArray[start_index] = parent_key
             return self._rebalance_heap_up(parent_index)
         return True
@@ -56,9 +57,9 @@ class Heap:
         heap_size = sum([2**(i) for i in range(depth+1)])
         if heap_size < len(a):
             raise KeyError("Given depth is higher than array lenght")
-        a = sorted(a, reverse=True)
+        self.HeapSize = heap_size
         for key in a[:heap_size]:
-            self.HeapArray.append(key)
+            self.Add(key)
 
     def GetMax(self):
         if len(self.HeapArray) == 0:
@@ -71,7 +72,10 @@ class Heap:
         return root
 
     def Add(self, key):
-        self.HeapArray.append(key)
-        return self._rebalance_heap_up(len(self.HeapArray)-1)
+        if self.HeapSize > len(self.HeapArray):
+            self.HeapArray.append(key)
+            return self._rebalance_heap_up(len(self.HeapArray)-1)
+        return False
 
 
+	    
