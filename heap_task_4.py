@@ -84,7 +84,7 @@ class Heap:
         return -1
 
     def _find_max_key(self, i: int, min_key: int, max_key: int):
-        if i >= len(self.HeapArray):
+        if (i >= len(self.HeapArray)) or (self.HeapArray[i] < min_key):
             return -1
         if min_key <= self.HeapArray[i] <= max_key:
             return self.HeapArray[i]
