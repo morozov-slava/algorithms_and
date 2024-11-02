@@ -78,8 +78,8 @@ class SimpleTree:
             n_descendants += child_n_descendants
             edges_to_delete.extend(child_edges_to_delete)
         if (n_descendants % 2 == 0) and (self.Root != Node):
-            edges_to_delete.append(Node)
             edges_to_delete.append(Node.Parent)
+            edges_to_delete.append(Node)
             n_descendants = 0
         return n_descendants, edges_to_delete
 
