@@ -40,6 +40,7 @@ class DirectedGraph:
         if (self.m_adjacency[parent_v] is not None) and (self.m_adjacency[child_v] is not None):
             self.m_adjacency[parent_v][child_v] = 0
 
+    # 2.* (бонус +500) Реализуйте направленный граф, представленный матрицей смежности, и добавьте метод проверки, будет ли он циклическим. 
     def IsCyclic(self):
         if self.max_vertex == 0:
             return False
