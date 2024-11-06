@@ -52,18 +52,18 @@ class SimpleGraph:
 
     def _depth_first_search(self, VFrom: int, VTo: int):
         self.vertex[VFrom].Hit = True
-        path = [VFrom]
+        path = [self.vertex[VFrom]]
         for i in range(self.max_vertex):
             if self.vertex[i] is None:
                 continue
             if (self.m_adjacency[VFrom][i] == 1) and (i == VTo):
-                path.append(i)
+                path.append(self.vertex[i])
                 return path
             if (self.m_adjacency[VFrom][i] == 1) and (self.vertex[i].Hit == False):
                 path.extend(self._depth_first_search(i, VTo))
-                if path[-1] == VTo:
+                if path[-1] == self.vertex[VTo]:
                     break
-        if path[-1] != VTo:
+        if path[-1] != self.vertex[VTo]:
             return []
         return path
 
