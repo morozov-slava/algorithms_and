@@ -83,17 +83,18 @@ class SimpleTree:
             n_descendants = 0
         return n_descendants, edges_to_delete
 
-    # 3.* (бонус +500) Добавьте метод, который для текущего дерева определяет общее количество чётных поддеревьев. 
+    # 3.* (бонус +500) Добавьте метод, который для текущего дерева определяет общее количество чётных поддеревьев.
     def CountEvenSubtree(self):
         return self._count_even_subtree(self.Root, 1)
-
+        
     def _count_even_subtree(self, Node: SimpleTreeNode, nodes_counter: int):
         n_even_subtrees = 0
+        if Node != self.Root:
+            n_even_subtrees += 1
         if nodes_counter % 2 == 0:
-            n_even_subtrees = 1
+            n_even_subtrees += 1
         for ChildNode in Node.Children:
             n_even_subtrees += self._count_even_subtree(ChildNode, nodes_counter+1)
-            n_even_subtrees += self._count_even_subtree(ChildNode, 1) 
         return n_even_subtrees
 
 
