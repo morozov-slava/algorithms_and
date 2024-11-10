@@ -61,6 +61,8 @@ class SimpleGraph:
             return [self.vertex[VFrom]], NearestV
         connected_i = []
         for i in range(self.max_vertex):
+            if (self.m_adjacency[VFrom][i] == 1) and (i == VTo):
+                return [self.vertex[i], self.vertex[VFrom]], NearestV
             if (self.m_adjacency[VFrom][i] == 1) and (self.vertex[i].Hit == False):
                 connected_i.append((i, VFrom))
         queue.extend(connected_i)
