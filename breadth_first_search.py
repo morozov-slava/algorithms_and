@@ -54,7 +54,7 @@ class SimpleGraph:
 
     def _breadth_first_search(self, VTo, queue: list):
         if len(queue) == 0:
-            return []
+            return [], None
         VFrom, NearestV = queue.pop(0)
         self.vertex[VFrom].Hit = True
         if VFrom == VTo:
