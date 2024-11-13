@@ -49,27 +49,30 @@ class SimpleGraph:
             if (Node is None) or (Node.Hit == False):
                 continue
             Node.Hit = False
-        return self._weak_vertices([0], [])
+        if self.vertex[0] is None:
+            return []
+        triangle_indices = list(self._weak_vertices([(0, None, set())], set()))
+        beyond_triangle_nodes = [self.vertex[i] for i in range(self.max_vertex) if (self.vertex[i] is not None) and i not in triangle_indices]
+        return beyond_triangle_nodes
 
-    def _weak_vertices(self, queue: list, beyond_triangle_nodes: list):
+    def _weak_vertices(self, queue: list, triangle_indices: set):
         if len(queue) == 0:
-            return beyond_triangle_nodes
-        index = queue.pop(0)
+            return triangle_indices
+        index, prev_index, prev_node_connected_indices = queue.pop(0)
         self.vertex[index].Hit = True
-        connected_visited_nodes = []
+        connected_visited_nodes = set()
         for i in range(self.max_vertex):
-            if (self.vertex[i] is None):
+            if self.vertex[i] is None:
                 continue
-            if (self.m_adjacency[index][i] == 1) and (self.vertex[i].Hit == True):
-                connected_visited_nodes.append(i)
-            if (self.m_adjacency[index][i] == 1) and (self.vertex[i].Hit == False) and (i not in queue):
-                queue.append(i)
-        if len(connected_visited_nodes) >= 2:
-            for n in connected_visited_nodes:
-                if self.vertex[n] in beyond_triangle_nodes:
-                    beyond_triangle_nodes.remove(self.vertex[n])
-        if len(connected_visited_nodes) < 2:
-            beyond_triangle_nodes.append(self.vertex[index])
-        return self._weak_vertices(queue, beyond_triangle_nodes)
+            if self.m_adjacency[index][i] == 1:
+                connected_visited_nodes.add(i)
+        for ci in connected_visited_nodes:
+            if self.vertex[ci].Hit == False:
+                queue.append((ci, index, connected_visited_nodes))
+        intersected_indices = connected_visited_nodes.intersection(prev_node_connected_indices)
+        if len(intersected_indices):
+            triangle_indices.add(prev_index)
+            triangle_indices.add(index)
+        return self._weak_vertices(queue, triangle_indices)
 
 
