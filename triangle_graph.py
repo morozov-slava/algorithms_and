@@ -51,9 +51,9 @@ class SimpleGraph:
             Node.Hit = False
         return self._weak_vertices([0], [])
 
-    def _weak_vertices(self, queue: list, beyond_triangle_indices: list):
+    def _weak_vertices(self, queue: list, beyond_triangle_nodes: list):
         if len(queue) == 0:
-            return beyond_triangle_indices
+            return beyond_triangle_nodes
         index = queue.pop(0)
         self.vertex[index].Hit = True
         connected_visited_nodes = []
@@ -66,10 +66,10 @@ class SimpleGraph:
                 queue.append(i)
         if len(connected_visited_nodes) >= 2:
             for n in connected_visited_nodes:
-                if n in beyond_triangle_indices:
-                    beyond_triangle_indices.remove(n)
+                if self.vertex[n] in beyond_triangle_nodes:
+                    beyond_triangle_nodes.remove(self.vertex[n])
         if len(connected_visited_nodes) < 2:
-            beyond_triangle_indices.append(index)
-        return self._weak_vertices(queue, beyond_triangle_indices)
+            beyond_triangle_nodes.append(self.vertex[index])
+        return self._weak_vertices(queue, beyond_triangle_nodes)
 
 
