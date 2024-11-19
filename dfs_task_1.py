@@ -73,20 +73,17 @@ class SimpleGraph:
             if (Node is None) or (Node.Hit == False):
                 continue
             Node.Hit = False
-        return self._is_connected_graph(0, None)
+        n_connected_nodes = self._is_connected_graph(0)
+        return n_connected_nodes == len([N for N in self.vertex if N is not None])
 
-    def _is_connected_graph(self, index: int, parent_index: int):
+    def _is_connected_graph(self, index: int):
         self.vertex[index].Hit = True
-        path = [index]
+        n_connected_nodes = 1
         for i in range(self.max_vertex):
             if self.vertex[i] is None:
                 continue
-            if (self.m_adjacency[index][i] == 1) and (self.vertex[i].Hit == True) and (i != parent_index):
-                return True
             if (self.m_adjacency[index][i] == 1) and (self.vertex[i].Hit == False):
-                connected_path = self._is_connected_graph(i, index)
-                if connected_path == True:
-                    return True
-        return False
+                n_connected_nodes += self._is_connected_graph(i)
+        return n_connected_nodes
 
 
