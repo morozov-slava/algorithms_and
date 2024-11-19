@@ -1,6 +1,7 @@
 class Vertex:
     def __init__(self, val):
         self.Value = val
+        self.Hit = False
   
 class DirectedGraph:
     def __init__(self, size: int):
@@ -45,16 +46,20 @@ class DirectedGraph:
     def GetLongestEasyWay(self):
         if self.max_vertex == 0:
             return 0
-        return self._find_longest_easy_way(0, 0, set())
-
-    def _find_longest_easy_way(self, index: int, depth: int, visited_nodes: set):
-        visited_nodes.add(index)
+        for Node in self.vertex:
+            if (Node is None) or (Node.Hit == False):
+                continue
+            Node.Hit = False
+        return self._find_longest_easy_way(0, 0)
+	    
+    def _find_longest_easy_way(self, index: int, depth: int):
+        self.vertex[index].Hit = True
         max_depth = depth
         for i in range(self.max_vertex):
             if self.vertex[i] is None:
                 continue
-            if (self.m_adjacency[index][i] == 1) and (i not in visited_nodes):
-                neighbour_depth = self._find_longest_easy_way(i, depth+1, visited_nodes)
+            if (self.m_adjacency[index][i] == 1) and (self.vertex[i].Hit == False):
+                neighbour_depth = self._find_longest_easy_way(i, depth+1)
                 if neighbour_depth > max_depth:
                     max_depth = neighbour_depth
         return max_depth
