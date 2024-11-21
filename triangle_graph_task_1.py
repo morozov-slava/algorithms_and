@@ -43,6 +43,7 @@ class SimpleGraph:
             self.m_adjacency[v1][v2] = 0
             self.m_adjacency[v2][v1] = 0
 
+    # 1.* Добавьте метод, подсчитывающий общее число треугольников в графе.
     def get_total_number_of_triangles(self):
         if self.vertex[0] is None:
             return []
