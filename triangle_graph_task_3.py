@@ -31,15 +31,19 @@ class SimpleGraph:
     #                  Реализуйте такой алгоритм, и оцените его сложность (O-большое).
     def get_beyond_triangle_nodes(self):
         beyond_triangle_indices = []
+        triangle_indices = set()
         for i in range(self.max_vertex):
+            if i in triangle_indices:
+                continue
             is_triangle_index = False
             for j in self.adjacency_list[i]:
                 intersected_nodes = self.adjacency_list[i].intersection(self.adjacency_list[j])
                 if len(intersected_nodes):
                     is_triangle_index = True
+                    triangle_indices.add(i)
+                    triangle_indices.add(j)
+                    triangle_indices = triangle_indices.union(intersected_nodes)
                     break
             if not is_triangle_index:
                 beyond_triangle_indices.append(i)
         return beyond_triangle_indices
-
-
