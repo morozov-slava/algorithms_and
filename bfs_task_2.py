@@ -3,7 +3,6 @@ class Node:
         self.value = v
         self.next = None
 
-
 class Queue:
     def __init__(self):
         self.head = None
@@ -26,6 +25,7 @@ class Queue:
 
     def is_empty(self):
         return self.head is None
+
 
 
 class SimpleTreeNode:
@@ -103,14 +103,15 @@ class SimpleTree:
             return 0
         queue = Queue()
         queue.enqueue(Node((self.Root, 0)))
-        return self._find_max_nodes_distance(queue)
-
-    def _find_max_nodes_distance(self, queue: list):
-        node, depth = queue.dequeue().value
-        for ChildNode in node.Children:
-            queue.enqueue(Node((ChildNode, depth+1)))
-        if queue.is_empty():
-            return depth
-        return self._find_max_nodes_distance(queue)
+        max_distance = 0
+        farthest_node = self.Root
+        while not queue.is_empty():
+            node, distance = queue.dequeue().value
+            for child in node.Children:
+                queue.enqueue(Node((child, distance+1)))
+                if distance + 1 > max_distance:
+                    max_distance = distance + 1
+                    farthest_node = child
+        return max_distance
 
 
