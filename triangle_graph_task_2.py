@@ -7,9 +7,9 @@ class Vertex:
 class SimpleGraph:
     def __init__(self, size: int):
         self.max_vertex = size
-        self.m_adjacency = [[0] * size for _ in range(size)]
-        self.vertex = [None] * size
-        
+        self.vertex = [None] * size 
+        self.adjacency_list = {i: set() for i in range(size)} 
+
     def AddVertex(self, v: int):
         empty_index = None
         for i in range(len(self.vertex)):
@@ -19,48 +19,31 @@ class SimpleGraph:
         if empty_index is not None:
             self.vertex[empty_index] = Vertex(v)
 
-    def RemoveVertex(self, v: int):
-        if self.vertex[v] is not None:
-            self.vertex[v] = None
-        # remove edges
-        for i in range(self.max_vertex):
-            if self.m_adjacency[v][i] != 0:
-                self.m_adjacency[v][i] = 0
-            if self.m_adjacency[i][v] != 0:
-                self.m_adjacency[i][v] = 0 
-	
-    def IsEdge(self, v1: int, v2: int):
-        if (self.m_adjacency[v1] is None) or (self.m_adjacency[v2] is None):
-            return False
-        return bool(self.m_adjacency[v1][v2]) and bool(self.m_adjacency[v2][v1])
-	
     def AddEdge(self, v1: int, v2: int):
-        if (self.m_adjacency[v1] is not None) or (self.m_adjacency[v2] is not None):
-            self.m_adjacency[v1][v2] = 1
-            self.m_adjacency[v2][v1] = 1
-	
-    def RemoveEdge(self, v1: int, v2: int):
-        if (self.m_adjacency[v1] is not None) and (self.m_adjacency[v2] is not None):
-            self.m_adjacency[v1][v2] = 0
-            self.m_adjacency[v2][v1] = 0
+        self.adjacency_list[v1].add(v2)
+        self.adjacency_list[v2].add(v1)
+
+    def IsEdge(self, v1: int, v2: int):
+        return v1 in self.adjacency_list[v2]
 
     # 2.* Реализуйте метод поиска узлов, не входящих ни в один треугольник в графе, только через интерфейс класса (операции над графом).
     def WeakVertices(self):
         beyond_triangle_indices = []
+        triangle_indices = [None] * self.max_vertex
         for i in range(self.max_vertex):
-            connected_nodes = []
-            for j in range(self.max_vertex):
-                if self.IsEdge(i, j):
-                    connected_nodes.append(j)
-            is_triangle_node = False
-            for k in range(len(connected_nodes)-1):
-                if is_triangle_node:
+            if triangle_indices[i] is not None:
+                continue
+            is_triangle_index = False
+            for j in self.adjacency_list[i]:
+                if is_triangle_index is True:
                     break
-                v1 = connected_nodes[k]
-                v2 = connected_nodes[k+1]
-                if self.IsEdge(i, v1) and self.IsEdge(i, v2) and self.IsEdge(v1, v2):
-                    is_triangle_node = True
-            if not is_triangle_node:
+                for k in self.adjacency_list[j]:
+                    if self.IsEdge(k, i) and k != i:
+                        is_triangle_index = True
+                        triangle_indices[j] = True
+                        triangle_indices[k] = True
+                        break
+            if not is_triangle_index:
                 beyond_triangle_indices.append(i)
         return beyond_triangle_indices
 
